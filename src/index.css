@@ -59,3 +59,20 @@ font-family: 'Source Code Pro', monospace;
   background: #555;
 }
 /* scroll bar */
+
+
+
+.filterScreen{
+  position:relative;
+}
+.filterScreen::after{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(25,26,27);
+  background: linear-gradient(180deg, rgba(25,26,27,1) 0%, rgba(25,26,27,0) 35%, rgba(25,26,27,1) 100%);
+  z-index: 15;
+}
