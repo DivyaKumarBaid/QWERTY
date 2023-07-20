@@ -38,7 +38,7 @@ const Solo = () => {
             </div>
             <div className="typer w-[80%] max-h-[20vh] overflow-auto">
                 <div
-                    className="text-3xl font-['Source_Code_Pro'] text-center tracking-[-5px]"
+                    className="text-3xl font-['Source_Code_Pro'] text-center tracking-[-8px]"
                     onClick={() => {
                         typingContext.inputRef.current.focus()
                         typingContext.setIsTyping(true);
@@ -48,7 +48,7 @@ const Solo = () => {
                     {test.map((item, idx) => {
                         return (
                             <span key={item + idx}>
-                                <span className={`${idx > index ? 'opacity-50' : testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100'}`}>{item}</span>
+                                <span className={`${idx > index ? 'opacity-[0.25]' : testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100'}`}>{item}</span>
                                 {<span className={`text-white transition-all text-[var(--theme-font-color)] duration-[0.1s] ${(typingContext.isTyping && idx == index) ? 'opacity-100 animate-pulse' : 'opacity-0'}`}>|</span>}
                             </span>
                         )
