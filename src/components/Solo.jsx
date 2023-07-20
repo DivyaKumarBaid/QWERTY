@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTyping } from '../context/TypingContext';
+import SoloResult from './SoloResult';
 
 const Solo = () => {
 
@@ -7,6 +8,7 @@ const Solo = () => {
 
     const [input, setInput] = React.useState("");
     const [index, setIndex] = React.useState(-1);
+    const [keyStrokes, setKeyStrokes] = React.useState(0);
     // const [typingContext.paragraph, setTest] = React.useState(typingContext.paragraph);
     const [testCorrect, setTestCorrect] = React.useState([]);
 
@@ -21,9 +23,11 @@ const Solo = () => {
     // console.log(testCorrect);
 
     const handleInput = (e) => {
+        setKeyStrokes(old => old + 1);
         typingContext.setIsTyping(true);
         setInput(e.target.value);
         let len = e.target.value.length - 1;
+        len == 0 && typingContext.handleStart()
         const lastChar = (e.target.value[len] === typingContext.paragraph[len]); //true or false;
         const arr = testCorrect;
         arr[len] = lastChar;
@@ -50,7 +54,7 @@ const Solo = () => {
     }
 
     return (
-        <>
+        !typingContext.complete ? <>
             <div>
                 <input
                     type="text"
@@ -63,23 +67,26 @@ const Solo = () => {
                     onPaste={e => e.preventDefault()}
                     onCut={e => e.preventDefault()}
                     onCopy={e => e.preventDefault()}
+                    onKeyDown={e => e.key === "Backspace" && setKeyStrokes(old => old - 1)}
                 />
             </div>
-            {typingContext.paragraph != null && <div className='w-[100%] flex justify-center items-center filterScreen'
+            {typingContext.paragraph != null && <div className='w-[100%] flex justify-center items-center filterScreen flex-col'
                 onClick={() => {
                     typingContext.inputRef.current.focus()
                     typingContext.setIsTyping(true);
                     document.body.style.cursor = 'none'
                 }}
             >
+
                 <div
                     className="typer scroll-smooth w-[80%] max-h-[38vh] overflow-auto" id="scrollDiv"
                 >
+                    <div className="relative z-[22] text-xl text-[var(--theme-font-color)] font-['Source_Code_Pro']">{typingContext.timeRemaining} seconds</div>
                     <div className="text-3xl font-['Source_Code_Pro'] my-20 text-center tracking-[-8px]">
                         {typingContext.paragraph.map((item, idx) => {
                             return (
                                 <span key={item + idx}>
-                                    <span className={`${idx > index ? 'opacity-[0.25]' : testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100'} `}>{item}</span>
+                                    <span className={`${idx > index ? 'opacity-[0.25]' : testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100'} `}>{(item == " " && idx <= index) ? !testCorrect[idx] ? '_' : ' ' : item}</span>
                                     {<span className={`text-white transition-all text-[var(--theme-font-color)] duration-[0.1s] ${(typingContext.isTyping && idx == index) ? 'opacity-100 animate-pulse' : 'opacity-0'}`}>|</span>}
                                 </span>
                             )
@@ -88,6 +95,7 @@ const Solo = () => {
                 </div>
             </div>}
         </>
+            : <SoloResult keyStrokes={keyStrokes} testCorrect={testCorrect} />
     )
 }
 
