@@ -2,6 +2,7 @@ import React from 'react'
 import SoloResult from './SoloResult';
 import { useMultiplayer } from '../context/MultiplayerContext';
 import RaceTrack from './RaceTrack';
+import MultiplayerResult from './MultiplayerResult';
 
 const MultiplayerPlayground = () => {
 
@@ -103,7 +104,7 @@ const MultiplayerPlayground = () => {
                 <RaceTrack />
             }
         </div>
-            : <SoloResult keyStrokes={keyStrokes} testCorrect={playerContext.testCorrect} />
+            : <MultiplayerResult keyStrokes={keyStrokes} testCorrect={playerContext.testCorrect} />
     )
 }
 

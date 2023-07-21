@@ -24,6 +24,8 @@ const RaceTrack = () => {
                                 src={`https://api.dicebear.com/6.x/adventurer/svg?seed=${playerId}&backgroundColor=b6e3f4&flip=true`} alt="" className='w-[3vw] rounded-[50%] cursor-pointer shadow relative transition-all duration-[0.5s]'
                                 style={{ left: playerContext.playerScore[playerId].score + '%' }}
                             />
+                            <div className='absolute top-[50%] z-[-1] bg-[var(--theme-font-color)] opacity-[0.2] w-[100%] h-[1vh]'></div>
+                            <div className='text-xl font-["Chakra_Petch"] absolute top-[25%] left-[100%]'>{Math.round(playerContext.playerScore[playerId].score)}</div>
                         </div>
                     )
                 })}
