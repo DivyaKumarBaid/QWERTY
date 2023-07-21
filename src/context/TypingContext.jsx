@@ -8,19 +8,31 @@ export const useTyping = () => React.useContext(TypingValue);
 export const TypingProvider = ({ children }) => {
     const [paragraph, setParagraph] = React.useState(null);
     const [isTyping, setIsTyping] = React.useState(true);
+    const [loadingSentence, setLoadingSentence] = React.useState(true);
     const [setting, setSetting] = React.useState({
         mode: "Easy",
         duration: 30
     })
     const inputRef = React.useRef();
 
+    const newParagraph = () => {
+        setLoadingSentence(true);
+        fetch(`https://qwerty-tally.vercel.app/text?mode=${setting.mode == "Easy" ? 0 : setting.mode == "Medium" ? 1 : 2}`)
+            .then(res => res.json())
+            .then(data => setParagraph(data.response.split('')))
+            .catch(err => console.log(err))
+            .finally(() => setLoadingSentence(false));
+    }
+
     React.useEffect(() => {
-        setParagraph(sentence[setting.mode].split(''))
+        newParagraph()
+        // setParagraph(sentence[setting.mode].split(''))
     }, [])
 
     const getNewPara = () => {
         // fetch the data
-        setParagraph(sentence[setting.mode].split(''))
+        newParagraph()
+        // setParagraph(sentence[setting.mode].split(''))
     }
 
     const [timeRemaining, setTimeRemaining] = React.useState(setting.duration);
@@ -58,7 +70,7 @@ export const TypingProvider = ({ children }) => {
 
     return (
         <TypingValue.Provider value={{
-            isTyping, setIsTyping, inputRef, setting, setSetting, paragraph, setParagraph, getNewPara, timeRemaining, handleStart, setTimeRemaining, setIsRunning, complete, setComplete
+            isTyping, setIsTyping, inputRef, setting, setSetting, paragraph, setParagraph, getNewPara, timeRemaining, handleStart, setTimeRemaining, setIsRunning, complete, setComplete, loadingSentence
         }}>
             {children}
         </TypingValue.Provider>

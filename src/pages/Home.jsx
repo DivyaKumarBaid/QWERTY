@@ -14,7 +14,7 @@ const Home = () => {
             document.body.style.cursor = 'default'
         }}>
             <Capsule />
-            <Solo />
+            {!typingContext.loadingSentence && <Solo />}
         </div>
     )
 }
