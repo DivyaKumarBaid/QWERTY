@@ -7,6 +7,7 @@ import { useTyping } from "../context/TypingContext"
 const Home = () => {
 
     const typingContext = useTyping();
+    console.log(typingContext)
 
     return (
         <div className="w-[100%] relative min-h-[90vh] gap-8 flex flex-col justify-center items-center" onMouseMoveCapture={() => {
