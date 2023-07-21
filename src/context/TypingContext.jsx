@@ -17,7 +17,7 @@ export const TypingProvider = ({ children }) => {
 
     const newParagraph = () => {
         setLoadingSentence(true);
-        fetch(`https://qwerty-tally.vercel.app/text?mode=${setting.mode == "Easy" ? 0 : setting.mode == "Medium" ? 1 : 2}`)
+        fetch(`${import.meta.env.VITE_API_URL}text?mode=${setting.mode == "Easy" ? 0 : setting.mode == "Medium" ? 1 : 2}`)
             .then(res => res.json())
             .then(data => setParagraph(data.response.split('')))
             .catch(err => console.log(err))
