@@ -81,12 +81,12 @@ const Solo = () => {
                 <div
                     className="typer scroll-smooth w-[80%] max-h-[38vh] overflow-auto" id="scrollDiv"
                 >
-                    <div className="relative z-[22] text-xl text-[var(--theme-font-color)] font-['Source_Code_Pro']">{typingContext.timeRemaining} seconds</div>
+                    <div className="absolute z-[22] translate-y-[-50px] text-2xl text-[var(--theme-font-color)] font-['Source_Code_Pro']">{typingContext.timeRemaining} seconds</div>
                     <div className="text-3xl font-['Source_Code_Pro'] my-20 text-center tracking-[-8px]">
                         {typingContext.paragraph.map((item, idx) => {
                             return (
                                 <span key={item + idx}>
-                                    <span className={`${idx > index ? 'opacity-[0.25]' : testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100'} `}>{(item == " " && idx <= index) ? !testCorrect[idx] ? '_' : ' ' : item}</span>
+                                    <span className={`${idx > index ? 'opacity-[0.25]' : testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100'} `}>{(item == " " && idx <= index) ? !testCorrect[idx] ? ' ' : ' ' : item}</span>
                                     {<span className={`text-white transition-all text-[var(--theme-font-color)] duration-[0.1s] ${(typingContext.isTyping && idx == index) ? 'opacity-100 animate-pulse' : 'opacity-0'}`}>|</span>}
                                 </span>
                             )

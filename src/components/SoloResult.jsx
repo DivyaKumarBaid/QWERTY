@@ -4,15 +4,18 @@ import { useTyping } from '../context/TypingContext'
 const SoloResult = (props) => {
 
     const typingContext = useTyping();
-    const grossWpm = (props.keyStrokes / 5) / (typingContext.setting.duration / 60);
     let unChangedErrors = 0;
     props.testCorrect.forEach(item => {
         if (!item)
             unChangedErrors += 1;
     })
+    //
 
-    const WPM = grossWpm - (unChangedErrors / (typingContext.setting.duration / 60));
-    const acc = (WPM / grossWpm) * 100;
+    const grossWpm = props.keyStrokes / 5 / (typingContext.setting.duration / 60);
+    const WPM = Math.max(0, grossWpm - (unChangedErrors / (typingContext.setting.duration / 60)));
+
+    // Calculate accuracy
+    const acc = ((props.keyStrokes - unChangedErrors) / props.keyStrokes) * 100;
 
     return (
         <div className='flex flex-col items-center gap-8'>
