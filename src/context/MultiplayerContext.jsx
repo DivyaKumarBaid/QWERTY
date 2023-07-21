@@ -11,6 +11,15 @@ export const MultiplayerProvider = ({ children }) => {
         user_name: localStorage.getItem('user_name') ? JSON.parse(localStorage.getItem('user_name')) : null,
     })
 
+    const [setting, setSetting] = React.useState({
+        mode: 0,
+        duration: 60
+    })
+
+    const GameState = ["Idle", "Waiting", "Playing", "Finished"];
+
+    const [stateOfGame, setStateOfGame] = React.useState(0);
+
     const loginUser = (name, uid) => {
         console.log(name, uid)
         localStorage.setItem('user_name', JSON.stringify(name));
@@ -22,7 +31,7 @@ export const MultiplayerProvider = ({ children }) => {
     }
 
     return (
-        <MultiplayerValue.Provider value={{ user, setUser, loginUser }}>
+        <MultiplayerValue.Provider value={{ user, setUser, loginUser, setting, setSetting, stateOfGame, setStateOfGame }}>
             {children}
         </MultiplayerValue.Provider>
     )

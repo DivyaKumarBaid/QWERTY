@@ -10,7 +10,6 @@ const SocketComponent = () => {
         // Event listener for 'connect' event.
         socket.on('connect', () => {
             console.log('Socket connected');
-            socket.emit('progress', { progress: "80%" })
             // You can perform actions when the socket connection is established.
         });
 
