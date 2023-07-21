@@ -11,24 +11,26 @@ function App() {
   return (
     <>
       <MultiplayerProvider>
-        <Nav />
-        {/* <LogoNav /> */}
-        <div className="App">
-          <Router>
-            <Routes>
-              <Route exact path='/' element={
-                <TypingProvider>
+        <TypingProvider>
+          <Nav />
+          {/* <LogoNav /> */}
+          <div className="App">
+            <Router>
+              <Routes>
+                <Route exact path='/' element={
+
                   <Home />
-                </TypingProvider>
-              } />
-              <Route exact path='/multiplayer' element={
 
-                <Multiplayer />
+                } />
+                <Route exact path='/multiplayer' element={
 
-              } />
-            </Routes>
-          </Router>
-        </div>
+                  <Multiplayer />
+
+                } />
+              </Routes>
+            </Router>
+          </div>
+        </TypingProvider>
       </MultiplayerProvider >
     </>
   )

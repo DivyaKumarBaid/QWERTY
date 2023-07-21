@@ -15,7 +15,7 @@ const SoloResult = (props) => {
     const WPM = Math.max(0, grossWpm - (unChangedErrors / (typingContext.setting.duration / 60)));
 
     // Calculate accuracy
-    const acc = ((props.keyStrokes - unChangedErrors) / props.keyStrokes) * 100;
+    const acc = Math.max(0, ((props.keyStrokes - props.totalError) / props.keyStrokes) * 100);
 
     return (
         <div className='flex flex-col items-center gap-8'>

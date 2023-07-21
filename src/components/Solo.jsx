@@ -9,6 +9,7 @@ const Solo = () => {
     const [input, setInput] = React.useState("");
     const [index, setIndex] = React.useState(-1);
     const [keyStrokes, setKeyStrokes] = React.useState(0);
+    const [totalError, setTotalError] = React.useState(0);
     // const [typingContext.paragraph, setTest] = React.useState(typingContext.paragraph);
     const [testCorrect, setTestCorrect] = React.useState([]);
 
@@ -29,6 +30,7 @@ const Solo = () => {
         let len = e.target.value.length - 1;
         len == 0 && typingContext.handleStart()
         const lastChar = (e.target.value[len] === typingContext.paragraph[len]); //true or false;
+        !lastChar && setTotalError(old => old + 1);
         const arr = testCorrect;
         arr[len] = lastChar;
         setIndex(len);
@@ -67,7 +69,7 @@ const Solo = () => {
                     onPaste={e => e.preventDefault()}
                     onCut={e => e.preventDefault()}
                     onCopy={e => e.preventDefault()}
-                    onKeyDown={e => e.key === "Backspace" && setKeyStrokes(old => old - 1)}
+                // onKeyDown={e => e.key === "Backspace" && setKeyStrokes(old => old - 1)}
                 />
             </div>
             {typingContext.paragraph != null && <div className='w-[100%] flex justify-center items-center filterScreen flex-col'
@@ -95,7 +97,7 @@ const Solo = () => {
                 </div>
             </div>}
         </>
-            : <SoloResult keyStrokes={keyStrokes} testCorrect={testCorrect} />
+            : <SoloResult keyStrokes={keyStrokes} testCorrect={testCorrect} totalError={totalError} />
     )
 }
 

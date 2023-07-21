@@ -10,10 +10,12 @@ const Home = () => {
     console.log(typingContext)
 
     return (
-        <div className="w-[100%] relative min-h-[90vh] gap-8 flex flex-col justify-center items-center" onMouseMoveCapture={() => {
-            typingContext.setIsTyping(false);
-            document.body.style.cursor = 'default'
-        }}>
+        <div className="w-[100%] relative min-h-[90vh] gap-8 flex flex-col justify-center items-center"
+            onMouseMoveCapture={() => {
+                typingContext.setIsTyping(false);
+                document.body.style.cursor = 'default'
+            }}
+        >
             <Capsule />
             {!typingContext.loadingSentence && <Solo />}
         </div>

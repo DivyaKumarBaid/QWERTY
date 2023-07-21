@@ -1,13 +1,12 @@
 import React from 'react'
-import { io } from 'socket.io-client';
 import { useMultiplayer } from '../context/MultiplayerContext';
 
-const ModeChoice = (props) => {
+const ModeChoice = () => {
 
     const playerContext = useMultiplayer();
 
     return (
-        <div className={`border-[rgba(255,255,255,0.2)] absolute top-[15%] transition-all duration-[0.5s] border py-2 px-4 rounded-3xl bg-[rgba(36,36,36)] shadow-md font-['Josefin_Sans'] flex gap-4 items-center`}>
+        <div className={`border-[rgba(255,255,255,0.2)] absolute z-[22] top-[15%] transition-all duration-[0.5s] border py-2 px-4 rounded-3xl bg-[rgba(36,36,36)] shadow-md font-['Josefin_Sans'] flex gap-4 items-center`}>
             {
                 playerContext.stateOfGame == 0 &&
                 <>
@@ -33,7 +32,7 @@ const ModeChoice = (props) => {
 
                     <div
                         className='opacity-50 cursor-pointer text-md font-bold hover:opacity-100 transition-all duration-[0.3s]'
-                        onClick={() => props.joinLobby()}
+                        onClick={() => playerContext.joinLobby()}
                     >
                         Join
                     </div>
@@ -41,10 +40,15 @@ const ModeChoice = (props) => {
                 </>
             }
             {
-                playerContext.stateOfGame == 1 &&
+                playerContext.stateOfGame >= 1 &&
                 <>
                     {/* <span className='opacity-50'>|</span> */}
-                    <div className='opacity-50 cursor-pointer text-md font-bold hover:opacity-100 transition-all duration-[0.3s]'>Leave</div>
+                    <div
+                        className='opacity-50 cursor-pointer text-md font-bold hover:opacity-100 transition-all duration-[0.3s]'
+                        onClick={() => playerContext.leaveLobby()}
+                    >
+                        Leave
+                    </div>
 
                 </>
             }
