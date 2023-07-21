@@ -30,29 +30,31 @@ const Nav = () => {
                 <RiKeyboardLine className='!text-[var(--theme-font-color)]' />
                 <span className='!text-[var(--theme-font-color)]'>QWERTY</span>
             </div>
-            {(playerContext.user.user_name != null && playerContext.user.uid != null) &&
-                <div className='flex items-center gap-16'>
-                    {currentPathname == '/' ?
-                        <a href={'/multiplayer'}>
-                            <div className='text-md text-[var(--theme-font-color)] font-bold tracking-widest hover:text-white transition-all duration-[0.3s]'>
-                                Multiplayer
-                            </div>
-                        </a>
-                        :
-                        <a href={'/'}>
-                            <div className='text-md text-[var(--theme-font-color)] font-bold tracking-widest hover:text-white transition-all duration-[0.3s]'>
-                                Solo
-                            </div>
-                        </a>
-                    }
+
+            <div className='flex items-center gap-16'>
+                {currentPathname == '/' ?
+                    <a href={'/multiplayer'}>
+                        <div className='text-md text-[var(--theme-font-color)] font-bold tracking-widest hover:text-white transition-all duration-[0.3s]'>
+                            Multiplayer
+                        </div>
+                    </a>
+                    :
+                    <a href={'/'}>
+                        <div className='text-md text-[var(--theme-font-color)] font-bold tracking-widest hover:text-white transition-all duration-[0.3s]'>
+                            Solo
+                        </div>
+                    </a>
+                }
+                {(playerContext.user.user_name != null && playerContext.user.uid != null) &&
                     <div className='flex items-center gap-4'>
                         <div className='text-md text-[var(--theme-font-color)] font-bold tracking-widest'>{playerContext.user.user_name}</div>
                         <img
                             src={`https://api.dicebear.com/6.x/adventurer/svg?seed=${playerContext.user.uid}&backgroundColor=b6e3f4&flip=true`} alt="" className='w-[3vw] rounded-[50%] cursor-pointer shadow'
                         />
                     </div>
-                </div>
-            }
+                }
+            </div>
+
         </div>
     )
 }
