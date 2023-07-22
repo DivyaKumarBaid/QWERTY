@@ -23,7 +23,7 @@ const MultiplayerResult = (props) => {
     const WPM = Math.max(0, grossWpm - (unChangedErrors / (playerContext.setting.duration / 60)));
 
     // Calculate accuracy
-    const acc = Math.max(0, ((props.keyStrokes - props.totalError) / props.keyStrokes) * 100);
+    const acc = props.keyStrokes == 0 ? 0 : Math.max(0, ((props.keyStrokes - props.totalError) / props.keyStrokes) * 100);
     console.log(
         acc,
         props.keyStrokes,
