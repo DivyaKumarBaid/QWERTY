@@ -32,7 +32,7 @@ const NameModal = () => {
 
 
     return (
-        <div className="w-[100vw] absolute left-0 top-0 z-[22] h-[100vh] bg-[rgba(36,36,36,0.3)] backdrop-blur-sm flex items-center justify-center">
+        <div className="w-[100vw] absolute left-0 top-0 z-[100] h-[100vh] bg-[rgba(36,36,36,0.3)] backdrop-blur-sm flex items-center justify-center">
             <div className='bg-[rgba(36,36,36)] shadow-lg rounded-lg p-4 flex flex-col items-center gap-4'>
                 <img
                     src={`https://api.dicebear.com/6.x/adventurer/svg?seed=${uid}&backgroundColor=b6e3f4&flip=true`} alt="" className='w-[12vw] rounded-[50%] cursor-pointer'

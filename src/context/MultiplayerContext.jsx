@@ -54,13 +54,22 @@ export const MultiplayerProvider = ({ children }) => {
         })
         //current score
         socket.on('current-score', (data) => {
-            setPlayerScore(old => ({
-                ...old, [data.id]: {
-                    score: data.score,
-                    username: data.username,
-                    uid: data.id
+            setPlayerScore(old => {
+                if (data.score == 100) {
+                    setRanked(old => [...old, {
+                        score: data.score,
+                        username: data.username,
+                        uid: data.id
+                    }])
                 }
-            }))
+                return ({
+                    ...old, [data.id]: {
+                        score: data.score,
+                        username: data.username,
+                        uid: data.id
+                    }
+                })
+            })
         })
 
         // Clean up the socket connection when the component unmounts.
@@ -119,7 +128,7 @@ export const MultiplayerProvider = ({ children }) => {
 
     const [setting, setSetting] = React.useState({
         mode: 0,
-        duration: 120
+        duration: 15
     })
 
     const GameState = ["Idle", "Waiting", "Playing", "Finished"];
@@ -143,10 +152,27 @@ export const MultiplayerProvider = ({ children }) => {
     const [isTyping, setIsTyping] = React.useState(true);
     const [loadingSentence, setLoadingSentence] = React.useState(true);
     const inputRef = React.useRef();
+    const [ranked, setRanked] = React.useState([]);
 
     const [timeRemaining, setTimeRemaining] = React.useState(setting.duration);
     const [isRunning, setIsRunning] = React.useState(false);
     const [complete, setComplete] = React.useState(false);
+
+    const computeRanks = () => {
+        let keys = [];
+        for (const key in playerScore) {
+            const flag = ranked.find(item => item.uid === key);
+            if (flag == undefined || flag == null) {
+                keys.push(playerScore[key])
+            }
+        }
+        keys.sort((a, b) => (a.score > b.score) ? -1 : 1);
+        keys = [...ranked, ...keys];
+        let temp = keys[0];
+        keys[0] = keys[1];
+        keys[1] = temp;
+        setRanked(keys);
+    }
 
     // console.log(playerScore);
 
@@ -163,6 +189,7 @@ export const MultiplayerProvider = ({ children }) => {
 
         // Clear the interval when the timer reaches 0
         if (timeRemaining === 0) {
+            computeRanks();
             clearInterval(interval);
             setComplete(true);
             // show wpm
@@ -199,7 +226,7 @@ export const MultiplayerProvider = ({ children }) => {
     //
 
     return (
-        <MultiplayerValue.Provider value={{ user, setUser, loginUser, setting, setSetting, stateOfGame, setStateOfGame, room, setRoom, paragraph, setParagraph, isTyping, setIsTyping, inputRef, timeRemaining, handleStart, setTimeRemaining, setIsRunning, complete, setComplete, loadingSentence, resetStates, players, setPlayers, index, setIndex, testCorrect, setTestCorrect, joinLobby, leaveLobby, sendData, playerScore }}>
+        <MultiplayerValue.Provider value={{ user, setUser, loginUser, setting, setSetting, stateOfGame, setStateOfGame, room, setRoom, paragraph, setParagraph, isTyping, setIsTyping, inputRef, timeRemaining, handleStart, setTimeRemaining, setIsRunning, complete, setComplete, loadingSentence, resetStates, players, setPlayers, index, setIndex, testCorrect, setTestCorrect, joinLobby, leaveLobby, sendData, playerScore, ranked }}>
             {children}
         </MultiplayerValue.Provider>
     )

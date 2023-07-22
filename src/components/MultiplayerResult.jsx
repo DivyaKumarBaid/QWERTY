@@ -11,11 +11,11 @@ const MultiplayerResult = (props) => {
             unChangedErrors += 1;
     })
 
-    const keys = [];
-    for (const key in playerContext.playerScore) {
-        // console.log(key);
-        keys.push(key)
-    }
+    // const keys = [];
+    // for (const key in playerContext.playerScore) {
+    //     // console.log(key);
+    //     keys.push(key)
+    // }
 
     //
 
@@ -24,20 +24,25 @@ const MultiplayerResult = (props) => {
 
     // Calculate accuracy
     const acc = Math.max(0, ((props.keyStrokes - props.totalError) / props.keyStrokes) * 100);
+    console.log(
+        acc,
+        props.keyStrokes,
+        props.totalError
+    )
 
     return (
         <div className='flex flex-col items-center gap-8'>
             <div className='flex gap-16 items-center'>
-                {keys.map((playerId) => {
+                {playerContext.ranked.map((item, idx) => {
                     return (
-                        <div key={playerId} className='w-[100%] mb-8 gap-4 font-["Chakra_Petch"] flex flex-col items-center relative'
-                            style={{ top: (-playerContext.playerScore[playerId].score / 2) + "px" }}
+                        <div key={item.uid} className='w-[100%] mb-8 gap-4 font-["Chakra_Petch"] flex flex-col items-center relative'
+                            style={{ top: idx == 0 ? "-15px" : idx == 1 ? "-30px" : "0px" }}
                         >
-                            <div>{Math.round(playerContext.playerScore[playerId].score)}</div>
+                            <div>{Math.round(item.score)}</div>
                             <img
-                                src={`https://api.dicebear.com/6.x/adventurer/svg?seed=${playerId}&backgroundColor=b6e3f4&flip=true`} alt="" className='w-[8vw] rounded-[50%] cursor-pointer shadow transition-all duration-[0.5s]'
-
+                                src={`https://api.dicebear.com/6.x/adventurer/svg?seed=${item.uid}&backgroundColor=b6e3f4&flip=true`} alt="" className='w-[8vw] rounded-[50%] cursor-pointer shadow transition-all duration-[0.5s]'
                             />
+                            <div>{item.username}</div>
                         </div>
                     )
                 })}

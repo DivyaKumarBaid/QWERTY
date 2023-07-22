@@ -9,6 +9,7 @@ const MultiplayerPlayground = () => {
     const playerContext = useMultiplayer();
     const [input, setInput] = React.useState("");
     const [keyStrokes, setKeyStrokes] = React.useState(0);
+    const [totalError, setTotalError] = React.useState(0);
     // const [typingContext.paragraph, setTest] = React.useState(typingContext.paragraph);
 
     React.useEffect(() => {
@@ -28,6 +29,7 @@ const MultiplayerPlayground = () => {
         let len = e.target.value.length - 1;
         const lastChar = (e.target.value[len] === playerContext.paragraph[len]); //true or false;
         const arr = playerContext.testCorrect;
+        !lastChar && setTotalError(old => old + 1);
         arr[len] = lastChar;
         playerContext.setIndex(len);
         // len % 130 == 129 && document.getElementById('scrollDiv').scrollBy(0, 60);
@@ -104,7 +106,7 @@ const MultiplayerPlayground = () => {
                 <RaceTrack />
             }
         </div>
-            : <MultiplayerResult keyStrokes={keyStrokes} testCorrect={playerContext.testCorrect} />
+            : <MultiplayerResult keyStrokes={keyStrokes} testCorrect={playerContext.testCorrect} totalError={totalError} />
     )
 }
 
