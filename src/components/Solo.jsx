@@ -69,7 +69,7 @@ const Solo = () => {
                     onPaste={e => e.preventDefault()}
                     onCut={e => e.preventDefault()}
                     onCopy={e => e.preventDefault()}
-                // onKeyDown={e => e.key === "Backspace" && setKeyStrokes(old => old - 1)}
+                    onKeyDown={e => e.key === "Backspace" && setKeyStrokes(old => old - 1)}
                 />
             </div>
             {typingContext.paragraph != null && <div className='w-[100%] flex justify-center items-center filterScreen flex-col'

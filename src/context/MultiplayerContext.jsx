@@ -128,7 +128,7 @@ export const MultiplayerProvider = ({ children }) => {
 
     const [setting, setSetting] = React.useState({
         mode: 0,
-        duration: 15
+        duration: 120
     })
 
     const GameState = ["Idle", "Waiting", "Playing", "Finished"];
