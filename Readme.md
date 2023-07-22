@@ -9,6 +9,9 @@
  ## Frontend
 
     branch : frontend
+    for frontend .env is required
+        key:value
+        VITE_API_URL=http://localhost:xyz/
 
     For developement mode 
     ```
