@@ -35,6 +35,7 @@ export const TypingProvider = ({ children }) => {
         // setParagraph(sentence[setting.mode].split(''))
     }
 
+    const [startTime, setStartTime] = React.useState(null);
     const [timeRemaining, setTimeRemaining] = React.useState(setting.duration);
     const [isRunning, setIsRunning] = React.useState(false);
     const [complete, setComplete] = React.useState(false);
@@ -45,7 +46,10 @@ export const TypingProvider = ({ children }) => {
         // Start the countdown when the button is clicked
         if (isRunning && timeRemaining > 0) {
             interval = setInterval(() => {
-                setTimeRemaining(prevTime => prevTime - 1);
+                const now = Date.now();
+                const timeElapsed = now - startTime;
+                const timeRemaining = Math.max(0, setting.duration * 1000 - timeElapsed);
+                setTimeRemaining(Math.floor(timeRemaining / 1000));
             }, 1000);
         }
 
@@ -64,6 +68,7 @@ export const TypingProvider = ({ children }) => {
 
     const handleStart = () => {
         if (timeRemaining === setting.duration) {
+            setStartTime(Date.now());
             setIsRunning(true);
         }
     };

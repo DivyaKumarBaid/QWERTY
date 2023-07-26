@@ -3,6 +3,8 @@ import SoloResult from './SoloResult';
 import { useMultiplayer } from '../context/MultiplayerContext';
 import RaceTrack from './RaceTrack';
 import MultiplayerResult from './MultiplayerResult';
+import { toast } from 'react-hot-toast';
+import { blurToastStyle } from '../util/ToastStyle';
 
 const MultiplayerPlayground = () => {
 
@@ -53,6 +55,7 @@ const MultiplayerPlayground = () => {
         playerContext.setTestCorrect(arr);
     }
 
+
     return (
         !playerContext.complete ? <div className='flex flex-col items-center'>
             <div>
@@ -67,6 +70,7 @@ const MultiplayerPlayground = () => {
                     onPaste={e => e.preventDefault()}
                     onCut={e => e.preventDefault()}
                     onCopy={e => e.preventDefault()}
+                    // onBlur={() => playerContext.stateOfGame == '2' && toast('To start typing again click on the text', blurToastStyle)}
                     onKeyDown={e => e.key === "Backspace" && setKeyStrokes(old => old - 1)}
                 />
             </div>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { useTyping } from '../context/TypingContext';
 import SoloResult from './SoloResult';
+import { toast } from 'react-hot-toast';
+import { blurToastStyle } from '../util/ToastStyle';
 
 const Solo = () => {
 
@@ -66,6 +68,7 @@ const Solo = () => {
                     onChange={handleInput}
                     value={input}
                     ref={typingContext.inputRef}
+                    onBlur={() => toast('To start typing again click on the text', blurToastStyle)}
                     onPaste={e => e.preventDefault()}
                     onCut={e => e.preventDefault()}
                     onCopy={e => e.preventDefault()}

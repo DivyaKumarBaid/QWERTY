@@ -1,5 +1,8 @@
 import React from 'react';
+import { toast } from 'react-hot-toast';
 import { io } from 'socket.io-client';
+import { succesToastStyle } from '../util/ToastStyle';
+// import { successToastStyle } from '../util/ToastStyle';
 
 const socket = io.connect(import.meta.env.VITE_API_URL);
 
@@ -38,6 +41,7 @@ export const MultiplayerProvider = ({ children }) => {
         socket.on('assigned-room', (data) => {
             setRoom(data.room);
             setPlayers(data.player);
+            toast('Joined a Lobby!', succesToastStyle)
         })
         // player count
         socket.on('player-count', (data) => {
@@ -54,6 +58,7 @@ export const MultiplayerProvider = ({ children }) => {
         })
         //current score
         socket.on('current-score', (data) => {
+            // if(stateOfGame==1 || stateOfGame==2)
             setPlayerScore(old => {
                 if (data.score == 100) {
                     setRanked(old => [...old, {
@@ -96,8 +101,9 @@ export const MultiplayerProvider = ({ children }) => {
             mode: setting.mode,
             room: room
         })
-        console.log("leave")
         resetStates();
+        window.location.reload();
+        toast('You left the Lobby', succesToastStyle)
     }
     // send data every second
     const sendData = (first) => {
@@ -154,6 +160,7 @@ export const MultiplayerProvider = ({ children }) => {
     const inputRef = React.useRef();
     const [ranked, setRanked] = React.useState([]);
 
+    const [startTime, setStartTime] = React.useState(null);
     const [timeRemaining, setTimeRemaining] = React.useState(setting.duration);
     const [isRunning, setIsRunning] = React.useState(false);
     const [complete, setComplete] = React.useState(false);
@@ -182,7 +189,10 @@ export const MultiplayerProvider = ({ children }) => {
         // Start the countdown when the button is clicked
         if (isRunning && timeRemaining > 0) {
             interval = setInterval(() => {
-                setTimeRemaining(prevTime => prevTime - 1);
+                const now = Date.now();
+                const timeElapsed = now - startTime;
+                const timeRemaining = Math.max(0, setting.duration * 1000 - timeElapsed);
+                setTimeRemaining(Math.floor(timeRemaining / 1000));
                 sendData();
             }, 1000);
         }
@@ -203,6 +213,7 @@ export const MultiplayerProvider = ({ children }) => {
 
     const handleStart = () => {
         if (timeRemaining === setting.duration) {
+            setStartTime(Date.now());
             setIsRunning(true);
         }
     };
@@ -219,14 +230,15 @@ export const MultiplayerProvider = ({ children }) => {
         setIsRunning(false);
         setComplete(false);
         setPlayers(null);
-        setPlayerScore(null);
+        setPlayerScore({});
+        setRanked([]);
     }
     // clear
 
     //
 
     return (
-        <MultiplayerValue.Provider value={{ user, setUser, loginUser, setting, setSetting, stateOfGame, setStateOfGame, room, setRoom, paragraph, setParagraph, isTyping, setIsTyping, inputRef, timeRemaining, handleStart, setTimeRemaining, setIsRunning, complete, setComplete, loadingSentence, resetStates, players, setPlayers, index, setIndex, testCorrect, setTestCorrect, joinLobby, leaveLobby, sendData, playerScore, ranked }}>
+        <MultiplayerValue.Provider value={{ user, setUser, loginUser, setting, setSetting, stateOfGame, setStateOfGame, room, setRoom, paragraph, setParagraph, isTyping, setIsTyping, inputRef, timeRemaining, handleStart, setTimeRemaining, setIsRunning, complete, setComplete, loadingSentence, resetStates, players, setPlayers, index, setIndex, testCorrect, setTestCorrect, joinLobby, leaveLobby, sendData, playerScore, ranked, startTime, setStartTime }}>
             {children}
         </MultiplayerValue.Provider>
     )
