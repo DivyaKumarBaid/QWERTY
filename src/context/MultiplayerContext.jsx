@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 import { succesToastStyle } from '../util/ToastStyle';
 // import { successToastStyle } from '../util/ToastStyle';
 
-const socket = io.connect(import.meta.env.VITE_API_URL);
+const socket = io.connect("https://qwerty-backend.onrender.com/");
 
 export const MultiplayerValue = React.createContext();
 
