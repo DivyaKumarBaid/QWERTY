@@ -91,7 +91,7 @@ const Solo = () => {
                         {typingContext.paragraph.map((item, idx) => {
                             return (
                                 <span key={item + idx}>
-                                    <span className={`${idx > index ? 'opacity-[0.25]' : testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100'} `}>{(item == " " && idx <= index) ? !testCorrect[idx] ? ' ' : ' ' : item}</span>
+                                    <span className={`${idx > index ? 'opacity-[0.25]' : testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100 underline decoration-[red]'} `}>{(item == " " && idx <= index) ? !testCorrect[idx] ? ' ' : ' ' : item}</span>
                                     {<span className={`text-white transition-all text-[var(--theme-font-color)] duration-[0.1s] ${(typingContext.isTyping && idx == index) ? 'opacity-100 animate-pulse' : 'opacity-0'}`}>|</span>}
                                 </span>
                             )

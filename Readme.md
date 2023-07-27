@@ -37,5 +37,3 @@
         npm install
         npm run start
     ```
-
-    backend is hosted on : https://qwerty-backend.onrender.com/

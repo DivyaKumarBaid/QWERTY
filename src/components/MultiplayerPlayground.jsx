@@ -97,7 +97,7 @@ const MultiplayerPlayground = () => {
                         {playerContext.paragraph.map((item, idx) => {
                             return (
                                 <span key={item + idx}>
-                                    <span className={`${idx > playerContext.index ? 'opacity-[0.25]' : playerContext.testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100'} `}>{(item == " " && idx <= playerContext.index) ? !playerContext.testCorrect[idx] ? ' ' : ' ' : item}</span>
+                                    <span className={`${idx > playerContext.index ? 'opacity-[0.25]' : playerContext.testCorrect[idx] ? 'opacity-100' : '!text-[red] opacity-100 underline decoration-[red]'} `}>{(item == " " && idx <= playerContext.index) ? !playerContext.testCorrect[idx] ? ' ' : ' ' : item}</span>
                                     {<span className={`text-white transition-all text-[var(--theme-font-color)] duration-[0.1s] ${(playerContext.isTyping && idx == playerContext.index) ? 'opacity-100 animate-pulse' : 'opacity-0'}`}>|</span>}
                                 </span>
                             )
